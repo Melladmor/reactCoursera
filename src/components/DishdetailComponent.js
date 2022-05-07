@@ -1,67 +1,27 @@
-/* eslint-disable no-undef */
 import { Component } from "react";
-import {Card, CardBody,CardImg,CardImgOverlay, CardText,CardTitle, List} from 'reactstrap';
-
-class DishDetail extends Component{
+import {Card,CardImg,CardBody,CardTitle,CardText, List} from 'reactstrap'
+class DishDiteal extends Component{
     constructor(props){
-        super(props)
+        super(props);
 
-        this.state = {
-            selectDishes:null,
-        };
+        this.state ={
+
+        }
+        
     }
-
-    onDishSelect(dish){
-        this.setState({
-            selectDishes:dish,
-
-        })
-    };
 
     renderDish(dish){
-        if(dish !=null){
+        if(dish !=null)
+        {
             return(
-                <Card>
-                <CardImg width='100%' src={dish.image} alt={dish.name} />
-                <CardBody>
-                <CardTitle>{dish.name}</CardTitle>
-                <CardText>{dish.description}</CardText>
-                </CardBody>
-                </Card>
+            <Card>
+            <CardImg src={dish.image} alt={dish.name} top width='100%'/>
+            <CardBody>
+            <CardTitle>{dish.name}</CardTitle>
+            <CardText>{dish.description}</CardText>
+            </CardBody>
+            </Card>
             );
-        }else{
-            return(
-                <div></div>
-            )
-        }
-    }
-
-    renderComments(dish){
-        if(dish !=null){
-            
-
-            
-                
-                
-                const commentDish = dish.comments.map((com) => {
-                    return(
-                    <div key={com.id}>
-                    <List type="unstyled" className="mb-4">
-                    <li className="mb-1">{com.comment}</li>
-                    <li>--{com.author},  {com.date}</li>
-                    </List>
-                    </div>
-                    )
-                })
-
-                return(
-                    <div className="p-3">
-                    <h4>Comments</h4>
-                    {commentDish}
-                    </div>
-                )
-            
-            
 
         }else{
             return(
@@ -70,42 +30,61 @@ class DishDetail extends Component{
         }
     }
 
-
-    render(){
-        const menu = this.props.dishes.map((dish)=>{
+    renderComments(comments){
+        if(comments == null){
             return(
-                <div key={dish.id} className="col-12 col-md-5 m-1">
-                <Card onClick={()=>this.onDishSelect(dish)}>
-                    <CardImg width='100%' src={dish.image} alt={dish.name} />
-                    <CardImgOverlay>
-                    <CardTitle>{dish.name}</CardTitle>
-                    </CardImgOverlay>
-                    </Card>
-                </div>
-            );
+                <div></div>
+            )
+        };
+
+        const comment = comments.map((com)=>{
+            return(
+                <List type="unstyled" key={com.id}>
+                <li><p>{com.comment}</p></li>
+                <li><p>-- {com.author}</p></li>
+                <li><p>{new Intl.DateTimeFormat('en-US', {year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(com.date)) )}</p></li>
+                </List>
+            )
         });
 
+        return(
+            <div>
+            <h4>Comments</h4>
+            <div>
+            {comment}
+            </div>
+            </div>
+        )
+    }
 
+    render(){
+        const dish = this.props.dish;
+
+        if(dish ==null)
+        {
+            return(<div></div>)
+        }
+
+        const dishItem = this.renderDish(dish);
+        const dishComment = this.renderComments(dish.comments);
 
         return(
-            <div className="">
-                <div className="row">
-                {menu}
-                </div>
-                <div className="row">
-                <div className="col-sm-12 col-md-5  m-1">
-                {this.renderDish(this.state.selectDishes)}
-                </div>
-                <div className="col-sm-12 col-md-5  m-1">
-                {this.renderComments(this.state.selectDishes)}
-                </div>
-                </div>
+            <div className="container">
+            <div className="row">
+            <div className="col-sm-12 col-md-5 m-1">
+            {dishItem}
             </div>
-        );
+            <div className="col-sm-12 col-md-5 m-1">
+            {dishComment}
+            </div>
+            </div>
+            </div>
+
+        )
     }
+
+    
+
 }
 
-export default DishDetail;
-                    // <div className="col-sm-12 col-md-5  m-1">
-                // {this.renderComments(this.state.selectDishes)}
-                // </div>
+export default DishDiteal;
