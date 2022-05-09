@@ -1,9 +1,11 @@
 import { Component } from 'react';
+import Home from './HomeComponent';
 import Menu from './MenuComponent';
 import DishDiteal from './DishdetailComponent';
 import {DISHES} from '../shared/dishes';
 import Header from './HeaderComponent';
 import Foteer from './FotterConponent';
+import {Routes,Route,Navigate } from 'react-router-dom';
 
 
 
@@ -13,22 +15,27 @@ class Main extends Component{
     super(props);
     this.state ={
       dishes:DISHES,
-      selectedDish:null
     }
   }
 
-  onDishSelect(dishId){
-    this.setState({
-        selectedDish:dishId
-    })
-    }
+
 
   render(){
+    const HomePage = ()=>{
+      return(
+        <Home/>
+      )
+    }
     return (
       <div>
         <Header/>
-        <Menu dishes={this.state.dishes} onClick={(dishId) => this.onDishSelect(dishId)} />
-        <DishDiteal dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]} />
+
+        <Routes>
+          <Route exact path="/home" element={<Home/>}/>
+          <Route  path="/menu" element={<Menu dishes={this.state.dishes}/>} />
+          <Route path='*' element={<Navigate to="/home" replace/>}/>
+        </Routes>
+
         <Foteer/>
         </div>
     );
