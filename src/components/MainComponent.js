@@ -9,7 +9,7 @@ import { LEADERS } from '../shared/leaders';
 import { PROMOTIONS } from '../shared/promitions';
 import Header from './HeaderComponent';
 import Foteer from './FotterConponent';
-import {Routes,Route,Navigate } from 'react-router-dom';
+import {Switch,Route,Redirect } from 'react-router-dom';
 
 
 
@@ -28,25 +28,34 @@ class Main extends Component{
 
 
   render(){
+
+    const HomePage=()=>{
+      return(
+        <Home 
+            dish={this.state.dishes.filter((dish)=>dish.featured)[0]}
+            promotion={this.state.promotion.filter((promotion)=> promotion.featured)[0]}
+            leader={this.state.leader.filter((leader)=>leader.featured)[0]}
+        />
+      )
+    }
     
-    
+    const DishWithId = ({match}) => {
+      return(
+          <DishDiteal dish={this.state.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} 
+            comments={this.state.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} />
+      );
+    };
     return (
       <div>
         <Header/>
 
-        <Routes>
-          <Route  path="/home" 
-          element={<Home 
-            dish={this.state.dishes.filter((dish)=>dish.featured)[0]}
-            promotion={this.state.promotion.filter((promotion)=> promotion.featured)[0]}
-            leader={this.state.leader.filter((leader)=>leader.featured)[0]}
-            />}
-          />
-
-          <Route  path="/menu" element={<Menu dishes={this.state.dishes}/>} />
-          <Route path='/contactus' element={<Contact/>}/>
-          <Route path='*' element={<Navigate to="/home" replace/>}/>
-        </Routes>
+        <Switch>
+          <Route path="/home" component={HomePage}/>
+          <Route exact path="/menu" component={()=><Menu dishes={this.state.dishes}/>} />
+          <Route path='/menu/:dishId' component={DishWithId} />
+          <Route path='/contactus' component={<Contact/>}/>
+          <Redirect to="/home"/>
+        </Switch>
 
         <Foteer/>
         </div>
@@ -56,3 +65,4 @@ class Main extends Component{
 
 
 export default Main;
+          // <Route path='*' component={<Navigate to="/home" replace/>}/>

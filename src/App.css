@@ -20,6 +20,7 @@
     margin:0px auto;
     background: #9575CD ;
     color:floralwhite;
+    margin-top:50px;
 }
 
 address{
@@ -30,6 +31,5 @@ address{
 
 .navbar-dark {
     background-color: #512DA8;
-    z-index: 99999;
-
+    z-index: 1030;
 }

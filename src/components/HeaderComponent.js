@@ -22,7 +22,7 @@ class Header extends Component{
     render(){
         return(
             <>
-            <Navbar dark sticky="top" expand="md">
+            <Navbar dark fixed="top" expand="md">
             <div className="container d-flex flex-wrap justify-content-between">
             <NavbarBrand className="mr-auto" href="/">
             <img src='assets/images/logo.png' height="30" width="41" alt='Ristorante Con Fusion' />
