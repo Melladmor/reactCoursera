@@ -3,6 +3,7 @@ import Home from './HomeComponent';
 import Menu from './MenuComponent';
 import DishDiteal from './DishdetailComponent';
 import Contact from './ContactComponent';
+import About from './AboutComponent';
 import {DISHES} from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { LEADERS } from '../shared/leaders';
@@ -45,15 +46,23 @@ class Main extends Component{
             comments={this.state.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} />
       );
     };
+
+    const AboutPage = ()=>{
+      return(
+        <About leaders={this.state.leader}/>
+      )
+    }
+
     return (
       <div>
         <Header/>
 
         <Switch>
           <Route path="/home" component={HomePage}/>
+          <Route path="/aboutus" component={AboutPage}/>
           <Route exact path="/menu" component={()=><Menu dishes={this.state.dishes}/>} />
           <Route path='/menu/:dishId' component={DishWithId} />
-          <Route path='/contactus' component={<Contact/>}/>
+          <Route path='/contactus' component={()=><Contact/>}/>
           <Redirect to="/home"/>
         </Switch>
 

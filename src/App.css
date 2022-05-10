@@ -33,3 +33,8 @@ address{
     background-color: #512DA8;
     z-index: 1030;
 }
+.mediaElement{
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+}
