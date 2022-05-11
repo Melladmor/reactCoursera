@@ -38,3 +38,10 @@ address{
     flex-wrap: nowrap;
     gap: 20px;
 }
+.alert{
+    position: absolute;
+    max-width: 400px;
+    top: 70px;
+    right: 10px;
+    z-index: 11111;
+}

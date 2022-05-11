@@ -1,5 +1,5 @@
 import { Component } from "react";
-import {Nav, Navbar, NavbarBrand, NavItem,Collapse, NavbarToggler} from 'reactstrap';
+import {Alert,Nav, Navbar, NavbarBrand, NavItem,Collapse, NavbarToggler,Modal,Button,ModalHeader,ModalBody, Form, FormGroup, Label, Input} from 'reactstrap';
 import {NavLink} from 'react-router-dom';
 
 
@@ -9,9 +9,13 @@ class Header extends Component{
         super(props);
 
         this.state ={
-            isNavOpen:false
+            isNavOpen:false,
+            isModalOpen:false
         };
         this.toggleNav =this.toggleNav.bind(this);
+        this.modalToogle =this.modalToogle.bind(this);
+        this.hadleLogin =this.hadleLogin.bind(this);
+
     }
 
     toggleNav(){
@@ -19,6 +23,28 @@ class Header extends Component{
             isNavOpen:!this.state.isNavOpen
         })
     }
+    modalToogle(){
+        this.setState({
+            isModalOpen:!this.state.isModalOpen
+        })
+    }
+
+    hadleLogin(event){
+        this.modalToogle();
+        alert(
+            'UserName: '+this.username.value +"\n"+
+            'password: '+this.password.value +"\n"+
+            'Remember: '+this.remember.checked
+        )
+        event.preventDefault();
+
+    }
+  
+    
+
+
+
+
     render(){
         return(
             <>
@@ -40,8 +66,16 @@ class Header extends Component{
                     <NavLink className="nav-link"  to='/menu'><span className="fa fa-list "></span> Menu</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink className="nav-link" to='/contactus'><span className="fa fa-address-card "></span> Contact Us</NavLink>
+                    <NavLink className="nav-link" to='/contactus'><span className="fa fa-address-card"></span> Contact Us</NavLink>
                 </NavItem>
+                </Nav>
+                <Nav className="ms-auto" navbar>
+                    <NavItem>
+                        <Button outline onClick={this.modalToogle}>
+                        <span className="fa fa-sign-in me-2"></span>
+                        Login
+                        </Button>
+                    </NavItem>
                 </Nav>
             </Collapse>
             </div>
@@ -60,6 +94,29 @@ class Header extends Component{
             </div>
             </div>
             </div>
+
+            <Modal isOpen={this.state.isModalOpen} toggle={this.modalToogle}>
+                <ModalHeader isOpen={this.state.isModalOpen} toggle={this.modalToogle}>Login</ModalHeader >
+                <ModalBody>
+                    <Form onSubmit={this.hadleLogin}>
+                        <FormGroup>
+                            <Label htmlFor="username">User Name</Label>
+                            <Input type="text" id="username" name="username" placeholder="User Name" innerRef={(input)=>this.username = input}/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label htmlFor="password">Password</Label>
+                            <Input type="text" id="password" name="password" placeholder="Password" innerRef={(input)=>this.password = input}/>
+                        </FormGroup>
+                        <FormGroup check>
+                            <Label check>
+                                <Input type="checkbox" name="remember" innerRef={(input)=>this.remember = input}/>
+                                Remeber Me
+                            </Label>
+                        </FormGroup>
+                        <Button type="submit" value='submit' className="bg-primary" >Login</Button>
+                    </Form>
+                </ModalBody>
+            </Modal>
             </>
         );
     }
