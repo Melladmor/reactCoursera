@@ -12,16 +12,18 @@ function About(props) {
 
     function RenderLeader({leader}) {
         return (
-          <Media tag="li" className='mediaElement'>
-           <Media left middle>
-             <Media object src={leader.image} alt={leader.name} />
-           </Media>
-           <Media body className="ml-5">
+            <div key={leader.id}>
+            <Media tag="li" className='mediaElement' >
+            <Media left middle>
+                <Media object src={leader.image} alt={leader.name} />
+            </Media>
+            <Media body className="ml-5">
             <Media heading>{leader.name}</Media>
             <p>{leader.designation}</p>
             <p>{leader.description}</p>
-           </Media>
-          </Media>
+            </Media>
+            </Media>
+            </div>
         );
     }
     return(
